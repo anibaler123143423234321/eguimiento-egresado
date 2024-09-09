@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "https://eguimiento-egresado.onrender.com") // Esto permite solicitudes desde http://localhost:5200
 @RequestMapping("api/carreras")
 public class CarreraController {
 
