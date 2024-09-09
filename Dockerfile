@@ -1,27 +1,28 @@
-# Usa una imagen base de Maven para construir la aplicación
-FROM maven:3.9.2-openjdk-17 AS build
+# Usa una imagen base de Maven con JDK
+FROM maven:3.8.6-openjdk-17 AS build
 
-# Configura el directorio de trabajo
+# Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia el archivo pom.xml y descarga las dependencias de Maven
+# Copia el archivo pom.xml y descarga las dependencias
 COPY pom.xml .
 RUN mvn dependency:go-offline
 
-# Copia el resto del código fuente
+# Copia el código fuente y construye la aplicación
 COPY src ./src
-
-# Compila la aplicación y empaqueta el archivo JAR
 RUN mvn package -DskipTests
 
 # Usa una imagen base de OpenJDK para ejecutar la aplicación
-FROM openjdk:17-jdk-alpine
+FROM openjdk:17-jdk-slim
+
+# Establece el directorio de trabajo
+WORKDIR /app
 
 # Copia el archivo JAR desde la etapa de construcción
-COPY --from=build /app/target/seguimiento-egresado-0.0.1-SNAPSHOT.jar /app/seguimiento-egresado.jar
+COPY --from=build /app/target/seguimiento-egresado-0.0.1-SNAPSHOT.jar ./app.jar
 
-# Configura el punto de entrada para ejecutar la aplicación
-ENTRYPOINT ["java", "-jar", "/app/seguimiento-egresado.jar"]
-
-# Expone el puerto en el que se ejecuta la aplicación
+# Expone el puerto en el que la aplicación escucha
 EXPOSE 5555
+
+# Comando para ejecutar la aplicación
+ENTRYPOINT ["java", "-jar", "app.jar"]
