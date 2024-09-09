@@ -1,5 +1,5 @@
 # Usar una imagen base de Maven para construir el proyecto
-FROM maven:3.8.6-openjdk-17 AS build
+FROM amazoncorretto:21-apline-jdk
 
 COPY target/seguimiento-egresado-0.0.1-SNAPSHOT.jar app.jar
 
