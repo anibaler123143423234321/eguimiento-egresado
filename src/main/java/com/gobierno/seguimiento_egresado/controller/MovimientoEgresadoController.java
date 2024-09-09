@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "https://novedadesmonyclau.com")
 @RequestMapping("api/movimientos-egresados")
 public class MovimientoEgresadoController {
 

@@ -50,7 +50,7 @@ public class SecurityConfig{
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:5200"));
+                    config.setAllowedOrigins(List.of("https://novedadesmonyclau.com", "http://localhost:5200")); // Combina los orígenes permitidos
                     config.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setExposedHeaders(List.of("Authorization"));
@@ -86,13 +86,17 @@ public class SecurityConfig{
 
 
     @Bean
-    public WebMvcConfigurer corsConfigurer()
-    {
+    public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*");
+                registry.addMapping("/**")
+                        .allowedOrigins("https://novedadesmonyclau.com") // Asegúrate de que esto sea el origen correcto
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
     }
+
 }

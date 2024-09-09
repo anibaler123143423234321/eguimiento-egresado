@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "https://eguimiento-egresado.onrender.com") // Esto permite solicitudes desde http://localhost:5200
+@CrossOrigin(origins = "https://novedadesmonyclau.com")
 @RequestMapping("api/user")
 public class UserController {
     @Autowired
