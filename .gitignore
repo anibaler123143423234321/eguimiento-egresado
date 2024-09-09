@@ -1,10 +1,4 @@
-HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-
-### STS ###
+# Ignora directorios y archivos generados específicos de cada IDE
 .apt_generated
 .classpath
 .factorypath
@@ -13,21 +7,19 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
+# Archivos generados por IntelliJ IDEA
 .idea
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+# Archivos generados por NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
-/.nb-gradle/
+/nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
+# Archivos generados por VS Code
 .vscode/
