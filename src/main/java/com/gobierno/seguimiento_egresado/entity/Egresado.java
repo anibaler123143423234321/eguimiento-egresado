@@ -32,8 +32,8 @@ public class Egresado {
     @Column(name = "egre_carrera", nullable = false)
     private Long idCarrera;
 
-    @Column(name = "egre_anioegreso", length = 4)
-    private String anioEgreso;
+    @Column(name = "egre_anioegreso", nullable = false)
+    private Integer anioEgreso;
 
     @Column(name = "egre_telefono1", length = 20)
     private String telefono1;
@@ -41,11 +41,11 @@ public class Egresado {
     @Column(name = "egre_telefono2", length = 20)
     private String telefono2;
 
-    @Column(name = "egre_titulado", nullable = false, length = 1)
-    private boolean titulado;
+    @Column(name = "egre_titulado", nullable = false, length = 3)
+    private String titulado; // Cambiado a String
 
-    @Column(name = "egre_discapacidad", nullable = false, length = 1)
-    private boolean discapacidad;
+    @Column(name = "egre_discapacidad", nullable = false, length = 3)
+    private String discapacidad; // Cambiado a String
 
     @Column(name = "egre_estado", nullable = false, length = 1)
     private String estado = "A"; // Valor por defecto

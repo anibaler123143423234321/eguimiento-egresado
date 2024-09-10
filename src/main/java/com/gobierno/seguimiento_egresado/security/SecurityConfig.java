@@ -91,7 +91,7 @@ public class SecurityConfig{
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://novedadesmonyclau.com") // Asegúrate de que esto sea el origen correcto
+                        .allowedOrigins("https://novedadesmonyclau.com", "http://localhost:5200")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
