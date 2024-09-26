@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = {"https://novedadesmonyclau.com", "http://localhost:5200"})
+@CrossOrigin(origins = {"https://novedadesmonyclau.com", "http://localhost:5200", "https://seguimiento-egresado.web.app"})
 @RequestMapping("api/authentication")
 public class AuthenticationController {
 

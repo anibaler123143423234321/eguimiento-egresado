@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"https://novedadesmonyclau.com", "http://localhost:5200"})
+@CrossOrigin(origins = {"https://novedadesmonyclau.com", "http://localhost:5200", "https://seguimiento-egresado.web.app"})
 @RequestMapping("api/egresados")
 public class EgresadoController {
 
