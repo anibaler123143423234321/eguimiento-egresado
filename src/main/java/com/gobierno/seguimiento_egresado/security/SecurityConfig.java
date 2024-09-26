@@ -63,17 +63,18 @@ public class SecurityConfig{
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/api/authentication/sign-in", "/api/authentication/sign-up").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/carreras").hasAnyRole(Role.ADMIN.name(), Role.EGRESADO.name())
-                                .requestMatchers(HttpMethod.GET, "/api/carreras/{id}").hasAnyRole(Role.ADMIN.name(), Role.EGRESADO.name())
+                                .requestMatchers(HttpMethod.GET, "/api/carreras").hasRole(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.GET, "/api/carreras/{id}").hasRole(Role.ADMIN.name())
                                 .requestMatchers(HttpMethod.POST, "/api/carreras").hasRole(Role.ADMIN.name())
 
-                                .requestMatchers(HttpMethod.GET, "/api/egresados").hasAnyRole(Role.ADMIN.name(), Role.EGRESADO.name())
-                                .requestMatchers(HttpMethod.GET, "/api/egresados/{id}").hasAnyRole(Role.ADMIN.name(), Role.EGRESADO.name())
+                                .requestMatchers(HttpMethod.GET, "/api/egresados").hasRole(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.GET, "/api/egresados/{id}").hasRole(Role.ADMIN.name())
                                 .requestMatchers(HttpMethod.POST, "/api/egresados").hasRole(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.POST, "/api/authentication/sign-in/egresado").hasAnyRole(Role.ADMIN.name(), Role.EGRESADO.name())
 
                                 .requestMatchers(HttpMethod.GET, "/api/movimientos-egresados").hasAnyRole(Role.ADMIN.name(), Role.EGRESADO.name())
                                 .requestMatchers(HttpMethod.GET, "/api/movimientos-egresados/{id}").hasAnyRole(Role.ADMIN.name(), Role.EGRESADO.name())
-                                .requestMatchers(HttpMethod.POST, "/api/movimientos-egresados").hasRole(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.POST, "/api/movimientos-egresados").hasAnyRole(Role.ADMIN.name(), Role.EGRESADO.name())
 
                                 .anyRequest().authenticated()
                 );

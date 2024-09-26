@@ -47,6 +47,22 @@ public class JwtProviderImpl implements JwtProvider {
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
+    @Override
+    public String generateTokenForEgresado(UserPrincipal auth) {
+        String authorities = auth.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        Key key = Keys.hmacShaKeyFor(JWT_SECRET.getBytes(StandardCharsets.UTF_8));
+
+        return Jwts.builder()
+                .setSubject(auth.getUsername())
+                .claim("roles", authorities)
+                .claim("egresadoId", auth.getId())
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_IN_MS))
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
+    }
 
     @Override
     public String generateToken(User user) {

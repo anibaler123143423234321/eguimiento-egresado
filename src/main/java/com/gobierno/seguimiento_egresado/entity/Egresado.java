@@ -1,5 +1,6 @@
 package com.gobierno.seguimiento_egresado.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
@@ -54,7 +55,20 @@ public class Egresado {
     @Column(name = "role", nullable = false)
     private Role role;
 
+    // ... otros campos
+    @Column(name = "usuario", nullable = false, length = 50, unique = true)
+    private String username;
+    @Column(name = "egre_email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "egre_password", nullable = false)
+    private String password;
+
+    @Transient
+    private String token;
+
     @ManyToOne
     @JoinColumn(name = "egre_carrera", insertable = false, updatable = false)
+    @JsonIgnore // O @JsonManagedReference si hay una relación bidireccional
     private Carrera carrera;
 }

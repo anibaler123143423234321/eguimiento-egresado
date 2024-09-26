@@ -1,9 +1,11 @@
 package com.gobierno.seguimiento_egresado.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -48,4 +50,5 @@ public class User {
 
     @Transient
     private String token;
+
 }

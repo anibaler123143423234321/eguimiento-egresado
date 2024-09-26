@@ -1,5 +1,6 @@
 package com.gobierno.seguimiento_egresado.security;
 
+import com.gobierno.seguimiento_egresado.entity.Egresado;
 import com.gobierno.seguimiento_egresado.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,8 +20,9 @@ public class UserPrincipal implements UserDetails {
     private Long id;
     private String username;
     private String password;
-    private User user;
-    private Set<GrantedAuthority> authorities;
+    private User user;           // Solo se usa al iniciar sesión como usuario
+    private Egresado egresado;  // Solo se usa al iniciar sesión como egresado
+    private Set<GrantedAuthority> authorities; // Se mantiene si es necesario
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -63,10 +65,21 @@ public class UserPrincipal implements UserDetails {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.user = user;
-        // Puedes inicializar authorities según los roles del usuario
+    }
+
+    // Constructor que toma un Egresado como parámetro
+    public UserPrincipal(Egresado egresado) {
+        this.id = egresado.getId(); // Asegúrate de que Egresado tenga un método getId()
+        this.username = egresado.getEmail(); // O el campo que uses para el nombre de usuario
+        this.password = egresado.getPassword();
+        this.egresado = egresado;
     }
 
     public static UserPrincipal build(User user) {
         return new UserPrincipal(user);
+    }
+
+    public static UserPrincipal build(Egresado egresado) {
+        return new UserPrincipal(egresado);
     }
 }

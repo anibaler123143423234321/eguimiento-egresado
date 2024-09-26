@@ -11,6 +11,8 @@ public interface JwtProvider {
 
     Authentication getAuthentication(HttpServletRequest request);
 
+    String generateTokenForEgresado(UserPrincipal auth);
+
     String generateToken(User user);
 
     boolean isTokenValid(HttpServletRequest request);

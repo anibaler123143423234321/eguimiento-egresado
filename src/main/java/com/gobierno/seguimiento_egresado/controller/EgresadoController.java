@@ -32,7 +32,7 @@ public class EgresadoController {
 
     @PostMapping
     public Egresado create(@RequestBody Egresado egresado) {
-        return egresadoService.save(egresado);
+        return egresadoService.saveEgresado(egresado);
     }
 
 

@@ -1,6 +1,7 @@
 package com.gobierno.seguimiento_egresado.controller;
 
 
+import com.gobierno.seguimiento_egresado.entity.Egresado;
 import com.gobierno.seguimiento_egresado.entity.User;
 import com.gobierno.seguimiento_egresado.service.AuthenticationService;
 import com.gobierno.seguimiento_egresado.service.UserService;
@@ -42,5 +43,9 @@ public class AuthenticationController {
         return new ResponseEntity<>(authenticationService.signInAndReturnJWT(user), HttpStatus.OK);
     }
 
-
+    @PostMapping("sign-in/egresado")
+    public ResponseEntity<?> signInEgresado(@RequestBody Egresado egresado)
+    {
+        return new ResponseEntity<>(authenticationService.signInEgresadoAndReturnJWT(egresado), HttpStatus.OK);
+    }
 }
