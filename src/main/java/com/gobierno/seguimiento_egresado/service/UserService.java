@@ -24,4 +24,9 @@ public interface UserService {
 
     User findUserById(Long userId);
 
+    Optional<User> getdByUsernameOrEmail(String nombreOrEmail);
+
+    Optional<User> getByTokenPassword(String tokenPassword);
+
+    User updateUser(Long id, User updateUser);
 }

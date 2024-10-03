@@ -118,6 +118,39 @@
 			<artifactId>validation-api</artifactId>
 			<version>2.0.1.Final</version> <!-- Use the appropriate version -->
 		</dependency>
+		<!-- Dependencia de Thymeleaf Spring Integration -->
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf</artifactId>
+			<version>3.1.2.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring5</artifactId>
+			<version>3.1.2.RELEASE</version> <!-- Asegúrate de usar la misma versión que Thymeleaf Core -->
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version> <!-- Use the appropriate version -->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>5.3.23</version> <!-- Use the version you found -->
+		</dependency>
+
 
 	</dependencies>
 

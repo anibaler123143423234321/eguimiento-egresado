@@ -90,4 +90,58 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+    @Override
+    public Optional<User> getdByUsernameOrEmail(String nombreOrEmail)
+    {
+        return userRepository.findByUsernameOrEmail(nombreOrEmail, nombreOrEmail);
+    }
+
+    public void updateTokenPassword(User user, String newTokenPassword) {
+        user.setTokenPassword(newTokenPassword);
+        userRepository.save(user);
+    }
+
+    @Override
+    public Optional<User> getByTokenPassword(String tokenPassword) {
+        return userRepository.findByTokenPassword(tokenPassword);
+    }
+
+    @Override
+    public User updateUser(Long id, User updateUser) {
+        Optional<User> existingUserOptional = userRepository.findById(id);
+
+        if (existingUserOptional.isPresent()) {
+            User existingUser = existingUserOptional.get();
+
+            // Llamar al nuevo método para actualizar los atributos
+            User updatedUser = updateUserAttributes(existingUser, updateUser);
+
+            return userRepository.save(updatedUser);
+        } else {
+            return null;
+        }
+    }
+
+    // Nuevo método para actualizar atributos de manera más genérica
+    private User updateUserAttributes(User existingUser, User updateUser) {
+        if (updateUser.getNombre() != null) {
+            existingUser.setNombre(updateUser.getNombre());
+        }
+        if (updateUser.getApellido() != null) {
+            existingUser.setApellido(updateUser.getApellido());
+        }
+        if (updateUser.getUsername() != null) {
+            existingUser.setUsername(updateUser.getUsername());
+        }
+        if (updateUser.getTelefono() != null) {
+            existingUser.setTelefono(updateUser.getTelefono());
+        }
+        if (updateUser.getEmail() != null) {
+            existingUser.setEmail(updateUser.getEmail());
+        }
+        if (updateUser.getTokenPassword() != null) {
+            existingUser.setTokenPassword(updateUser.getTokenPassword());
+        }
+        return existingUser;
+    }
 }

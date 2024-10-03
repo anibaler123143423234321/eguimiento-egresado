@@ -1,6 +1,7 @@
 package com.gobierno.seguimiento_egresado.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
@@ -51,4 +52,11 @@ public class User {
     @Transient
     private String token;
 
+    @JsonProperty("tokenPassword")
+    @Column(name = "tokenPassword", nullable = true)
+    private String tokenPassword;
+
+
+    @Column(name = "deletion_time", nullable = true)
+    private LocalDateTime deletionTime;
 }
