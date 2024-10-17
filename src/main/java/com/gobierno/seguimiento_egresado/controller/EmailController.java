@@ -22,7 +22,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("gateway/email")
-@CrossOrigin
+@CrossOrigin(origins = { "http://localhost:5200", "https://seguimiento-egresado.web.app"})
 public class EmailController {
     @Autowired
     EmailService emailService;

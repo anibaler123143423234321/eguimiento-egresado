@@ -50,7 +50,7 @@ public class SecurityConfig{
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("https://novedadesmonyclau.com", "http://localhost:5200", "https://seguimiento-egresado.web.app")); // Agrega el nuevo origen permitido
+                    config.setAllowedOrigins(List.of("http://localhost:5200", "https://seguimiento-egresado.web.app")); // Agrega el nuevo origen permitido
                     config.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setExposedHeaders(List.of("Authorization"));
@@ -91,7 +91,7 @@ public class SecurityConfig{
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://novedadesmonyclau.com", "http://localhost:5200", "https://seguimiento-egresado.web.app") // Agrega el nuevo origen permitido
+                        .allowedOrigins("http://localhost:5200", "https://seguimiento-egresado.web.app") // Agrega el nuevo origen permitido
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
