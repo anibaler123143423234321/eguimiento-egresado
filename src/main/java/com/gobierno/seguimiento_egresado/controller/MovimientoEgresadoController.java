@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = { "http://localhost:5200", "https://seguimiento-egresado.web.app"})
@@ -23,11 +24,10 @@ public class MovimientoEgresadoController {
         return movimientoEgresadoService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<MovimientoEgresado> getById(@PathVariable Long id) {
-        return movimientoEgresadoService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @GetMapping("movimientos")
+    public ResponseEntity<List<MovimientoEgresado>> getMovimientosByToken() {
+        List<MovimientoEgresado> movimientos = movimientoEgresadoService.getMovimientosByToken();
+        return ResponseEntity.ok(movimientos);
     }
 
     @PostMapping
@@ -35,14 +35,4 @@ public class MovimientoEgresadoController {
         return movimientoEgresadoService.save(movimientoEgresado);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<MovimientoEgresado> update(@PathVariable Long id, @RequestBody MovimientoEgresado movimientoEgresado) {
-        return ResponseEntity.ok(movimientoEgresadoService.update(id, movimientoEgresado));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        movimientoEgresadoService.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
 }

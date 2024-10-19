@@ -5,6 +5,8 @@ import com.gobierno.seguimiento_egresado.entity.MovimientoEgresado;
 import com.gobierno.seguimiento_egresado.repository.EgresadoRepository;
 import com.gobierno.seguimiento_egresado.repository.MovimientoEgresadoRepository;
 import com.gobierno.seguimiento_egresado.service.MovimientoEgresadoService;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,24 +48,19 @@ public class MovimientoEgresadoServiceImpl implements MovimientoEgresadoService 
     }
 
     @Override
-    public Optional<MovimientoEgresado> findById(Long id) {
-        return movimientoEgresadoRepository.findById(id);
+    public List<MovimientoEgresado> getMovimientosByToken() {
+        // Obtener el usuario autenticado del contexto de seguridad
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+
+        // Buscar el egresado por su nombre de usuario
+        Optional<Egresado> optionalEgresado = egresadoRepository.findByUsername(username);
+        if (optionalEgresado.isPresent()) {
+            Egresado egresado = optionalEgresado.get();
+            return movimientoEgresadoRepository.findByEgresadoId(egresado.getId());
+        } else {
+            throw new RuntimeException("Egresado no encontrado para el usuario: " + username);
+        }
     }
 
-    @Override
-    public MovimientoEgresado update(Long id, MovimientoEgresado movimientoEgresado) {
-        return movimientoEgresadoRepository.findById(id).map(existingMovimiento -> {
-            existingMovimiento.setEmpresa(movimientoEgresado.getEmpresa());
-            existingMovimiento.setCargo(movimientoEgresado.getCargo());
-            existingMovimiento.setFechaInicio(movimientoEgresado.getFechaInicio());
-            existingMovimiento.setFechaFin(movimientoEgresado.getFechaFin());
-            existingMovimiento.setObservaciones(movimientoEgresado.getObservaciones());
-            return movimientoEgresadoRepository.save(existingMovimiento);
-        }).orElseThrow(() -> new RuntimeException("MovimientoEgresado not found"));
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        movimientoEgresadoRepository.deleteById(id);
-    }
 }
