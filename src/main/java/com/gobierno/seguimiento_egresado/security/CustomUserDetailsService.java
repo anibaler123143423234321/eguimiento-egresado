@@ -41,7 +41,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             return UserPrincipal.builder()
                     .egresado(egresado)
                     .id(egresado.getId())
-                    .username(egresado.getEmail()) // Aquí puedes usar el email como username
+                    .username(egresado.getUsername()) // Aquí puedes usar el email como username
                     .password(egresado.getPassword())
                     .authorities(authorities)
                     .build();

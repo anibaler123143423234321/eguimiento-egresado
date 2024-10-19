@@ -3,8 +3,10 @@ package com.gobierno.seguimiento_egresado.service.serviceImpl;
 import com.gobierno.seguimiento_egresado.entity.Egresado;
 import com.gobierno.seguimiento_egresado.entity.Role;
 import com.gobierno.seguimiento_egresado.repository.EgresadoRepository;
+import com.gobierno.seguimiento_egresado.security.jwt.JwtProvider;
 import com.gobierno.seguimiento_egresado.service.EgresadoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class EgresadoServiceImpl implements EgresadoService {
     private final EgresadoRepository egresadoRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtProvider jwtProvider;
 
     public EgresadoServiceImpl(EgresadoRepository egresadoRepository, PasswordEncoder passwordEncoder) {
         this.egresadoRepository = egresadoRepository;
@@ -60,6 +65,25 @@ public class EgresadoServiceImpl implements EgresadoService {
     public Optional<Egresado> findByUsername(String username)
     {
         return egresadoRepository.findByUsername(username);
+    }
+
+    @Override
+    public Egresado findByUsernameEgresadoReturnToken(String username) {
+        // Buscamos al usuario en la base de datos utilizando el repository
+        Egresado egresado = egresadoRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("El egresado no existe: " + username));
+
+        // Mensaje en consola para indicar que el usuario fue encontrado
+        System.out.println("Usuario encontrado: " + egresado.getUsername() + " - " + egresado.getEmail());
+
+        // Generamos el token JWT
+        String jwt = jwtProvider.generateTokenForEgresado(egresado);
+
+        // Asignamos el token generado al usuario
+        egresado.setToken(jwt);
+
+        // Devolvemos el objeto usuario con el token
+        return egresado;
     }
 
     @Override

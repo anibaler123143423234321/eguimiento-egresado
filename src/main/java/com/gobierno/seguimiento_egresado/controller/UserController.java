@@ -5,9 +5,12 @@ import com.gobierno.seguimiento_egresado.entity.Role;
 import com.gobierno.seguimiento_egresado.entity.User;
 import com.gobierno.seguimiento_egresado.security.UserPrincipal;
 import com.gobierno.seguimiento_egresado.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +25,9 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -54,8 +60,8 @@ public class UserController {
     }
 
 
-    @GetMapping()
-    public ResponseEntity<?> getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal)
+    @GetMapping
+    public ResponseEntity<User> getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal)
     {
         return new ResponseEntity<>(userService.findByUsernameReturnToken(userPrincipal.getUsername()), HttpStatus.OK);
     }

@@ -1,5 +1,6 @@
 package com.gobierno.seguimiento_egresado.security.jwt;
 
+import com.gobierno.seguimiento_egresado.entity.Egresado;
 import com.gobierno.seguimiento_egresado.entity.User;
 import com.gobierno.seguimiento_egresado.security.UserPrincipal;
 import com.gobierno.seguimiento_egresado.utils.SecurityUtils;
@@ -48,17 +49,13 @@ public class JwtProviderImpl implements JwtProvider {
                 .compact();
     }
     @Override
-    public String generateTokenForEgresado(UserPrincipal auth) {
-        String authorities = auth.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
-
+    public String generateTokenForEgresado(Egresado egresado) {
         Key key = Keys.hmacShaKeyFor(JWT_SECRET.getBytes(StandardCharsets.UTF_8));
 
         return Jwts.builder()
-                .setSubject(auth.getUsername())
-                .claim("roles", authorities)
-                .claim("egresadoId", auth.getId())
+                .setSubject(egresado.getUsername())
+                .claim("roles", egresado.getRole())
+                .claim("egresadoId", egresado.getId())
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_IN_MS))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();

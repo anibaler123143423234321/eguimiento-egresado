@@ -13,6 +13,7 @@ public interface EgresadoService {
     Optional<Egresado> findByEmail(String email);
 
     Optional<Egresado> findByUsername(String username);
+    Egresado findByUsernameEgresadoReturnToken(String username);
 
     void deleteById(Long id);
 }

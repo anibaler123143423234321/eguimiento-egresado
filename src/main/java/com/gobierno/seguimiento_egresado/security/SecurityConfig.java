@@ -67,7 +67,8 @@ public class SecurityConfig{
                                 .requestMatchers(HttpMethod.GET, "/api/carreras/{id}").hasRole(Role.ADMIN.name())
                                 .requestMatchers(HttpMethod.POST, "/api/carreras").hasRole(Role.ADMIN.name())
 
-                                .requestMatchers(HttpMethod.GET, "/api/egresados").hasRole(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.GET, "/api/egresados").hasAnyRole(Role.ADMIN.name(), Role.EGRESADO.name())
+                                .requestMatchers(HttpMethod.GET, "/api/egresados/all").hasRole(Role.ADMIN.name())
                                 .requestMatchers(HttpMethod.GET, "/api/egresados/{id}").hasRole(Role.ADMIN.name())
                                 .requestMatchers(HttpMethod.POST, "/api/egresados").hasRole(Role.ADMIN.name())
 

@@ -54,27 +54,33 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Egresado signInEgresadoAndReturnJWT(Egresado signInRequest) {
+        // Buscar al egresado por su correo electrónico
         Egresado egresado = egresadoRepository.findByEmail(signInRequest.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("El egresado no fue encontrado: " + signInRequest.getEmail()));
 
-        // Verificar si la contraseña ingresada coincide con la encriptada
+        // Verificar si la contraseña ingresada coincide con la almacenada
         boolean passwordMatches = passwordEncoder.matches(signInRequest.getPassword(), egresado.getPassword());
-
         if (!passwordMatches) {
             throw new RuntimeException("La contraseña no coincide");
         }
-        System.out.println("Email recibido: " + signInRequest.getEmail());
 
+        // Autenticar al egresado usando el AuthenticationManager
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(egresado.getEmail(), signInRequest.getPassword())
         );
 
+        // Obtener el principal de la autenticación
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        String jwt = jwtProvider.generateTokenForEgresado(userPrincipal);
 
-        egresado.setToken(jwt); // Asigna el token al egresado
+        // Generar el token JWT para el egresado utilizando el UserPrincipal
+        String jwt = jwtProvider.generateToken(userPrincipal); // Aquí puedes usar el UserPrincipal si es necesario
 
+        // Asignar el token al egresado
+        egresado.setToken(jwt);
+
+        // Devolver el egresado autenticado con el token JWT
         return egresado;
     }
+
 
 }
