@@ -8,12 +8,13 @@ import com.gobierno.seguimiento_egresado.security.jwt.JwtProvider;
 import com.gobierno.seguimiento_egresado.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,11 +34,40 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtProvider = jwtProvider;
+        // Inicializar el usuario ADMIN
+        initializeAdminUser();
+    }
+
+    /*@Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+    */
+
+    // Método para inicializar el usuario ADMIN
+    private void initializeAdminUser() {
+        if (!userRepository.existsByUsername("admin")) {
+            User adminUser = new User();
+            adminUser.setUsername("admin");
+            adminUser.setPassword(passwordEncoder.encode("12345678")); // Cambia a una contraseña segura
+            adminUser.setNombre("ENRIQUE");
+            adminUser.setApellido("LOPEZ ALBUJAR");
+            adminUser.setTelefono("123456789");
+            adminUser.setEmail("admin@iestpela.edu.pe");
+            adminUser.setFechaCreacion(LocalDateTime.now());
+            adminUser.setRole(Role.ADMIN);
+            adminUser.setEstado("A");
+
+            userRepository.save(adminUser);
+            System.out.println("Usuario ADMIN creado exitosamente.");
+        } else {
+            System.out.println("El usuario ADMIN ya existe.");
+        }
     }
 
     @Override
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
+    public Page<User> findAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     @Override

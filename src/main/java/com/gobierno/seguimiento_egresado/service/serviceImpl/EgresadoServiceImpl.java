@@ -1,16 +1,20 @@
 package com.gobierno.seguimiento_egresado.service.serviceImpl;
 
 import com.gobierno.seguimiento_egresado.entity.Egresado;
+import com.gobierno.seguimiento_egresado.entity.PageableQuery;
 import com.gobierno.seguimiento_egresado.entity.Role;
 import com.gobierno.seguimiento_egresado.repository.EgresadoRepository;
 import com.gobierno.seguimiento_egresado.security.jwt.JwtProvider;
 import com.gobierno.seguimiento_egresado.service.EgresadoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,9 +32,19 @@ public class EgresadoServiceImpl implements EgresadoService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /*
     @Override
     public List<Egresado> findAll() {
         return egresadoRepository.findAll();
+    }
+*/
+    @Override
+    public Page<Egresado> findAll(PageableQuery pageableQuery) {
+        Sort sort = Sort.by(Sort.Direction.fromString(pageableQuery.getEnOrden()),
+                pageableQuery.getOrdenadorPor());
+        Pageable pageable = PageRequest.of(pageableQuery.getPagina(),
+                pageableQuery.getElementosPorPagina(), sort);
+        return egresadoRepository.findAll(pageable);
     }
 
     @Override

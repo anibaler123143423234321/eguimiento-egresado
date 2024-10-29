@@ -1,15 +1,15 @@
 package com.gobierno.seguimiento_egresado.controller;
 
 import com.gobierno.seguimiento_egresado.entity.Egresado;
-import com.gobierno.seguimiento_egresado.entity.User;
+import com.gobierno.seguimiento_egresado.entity.PageableQuery;
 import com.gobierno.seguimiento_egresado.security.UserPrincipal;
 import com.gobierno.seguimiento_egresado.service.EgresadoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin(origins = { "http://localhost:5200", "https://seguimiento-egresado.web.app"})
@@ -22,9 +22,17 @@ public class EgresadoController {
         this.egresadoService = egresadoService;
     }
 
+    /*
     @GetMapping("/all")
     public List<Egresado> getAll() {
         return egresadoService.findAll();
+    }
+    */
+
+
+    @GetMapping("/all")
+    public Page<Egresado> getAll(PageableQuery pageableQuery) {
+        return egresadoService.findAll(pageableQuery );
     }
 
     @GetMapping

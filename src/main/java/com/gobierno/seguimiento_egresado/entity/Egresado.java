@@ -18,8 +18,8 @@ public class Egresado {
     @Column(name = "egre_dni", nullable = false, length = 8, unique = true)
     private String dni;
 
-    @Column(name = "egre_apellidos", nullable = false, length = 40)
-    private String apellidos;
+    @Column(name = "egre_apellido", nullable = false, length = 40)
+    private String apellido;
 
     @Column(name = "egre_nombre", nullable = false, length = 40)
     private String nombre;

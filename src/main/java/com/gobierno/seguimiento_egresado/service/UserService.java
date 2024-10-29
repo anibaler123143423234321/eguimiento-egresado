@@ -4,16 +4,19 @@ package com.gobierno.seguimiento_egresado.service;
 import com.gobierno.seguimiento_egresado.entity.Role;
 import com.gobierno.seguimiento_egresado.entity.User;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 
 public interface UserService {
-    List<User> findAllUsers();
+    Page<User> findAllUsers(Pageable pageable);
+
+    //List<User> findAllUsers();
     User saveUser(User user);
     Optional<User> findByEmail(String email);
 
